@@ -1,0 +1,4 @@
+rulers
+======
+
+Rebuilding Rails project
