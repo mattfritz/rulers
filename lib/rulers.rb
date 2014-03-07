@@ -8,6 +8,12 @@ module Rulers
         return [404, {'Content-Type' => 'text/html'}, []]
       end
 
+      if env['PATH_INFO'] == '/'
+        controller = QuotesController.new(env)
+        text = controller.send("a_quote")
+        return [200, {'Content-Type' => 'text/html'}, [text]]
+      end
+
       klass, act = get_controller_and_action(env)
       controller = klass.new(env)
 
