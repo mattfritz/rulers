@@ -9,9 +9,7 @@ module Rulers
       end
 
       if env['PATH_INFO'] == '/'
-        controller = QuotesController.new(env)
-        text = controller.send("a_quote")
-        return [200, {'Content-Type' => 'text/html'}, [text]]
+        return [200, {'Content-Type' => 'text/html'}, File.open('public/index.html') ]
       end
 
       klass, act = get_controller_and_action(env)
