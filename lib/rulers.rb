@@ -9,10 +9,14 @@ module Rulers
       end
 
       if env['PATH_INFO'] == '/'
-        cont = Object.const_get('HomeController')
-        controller = cont.new(env)
-        text = controller.send('index')
-        return [200, {'Content-Type' => 'text/html'}, [text]]
+        # cont = Object.const_get('HomeController')
+        # controller = cont.new(env)
+        # text = controller.send('index')
+        # return [200, {'Content-Type' => 'text/html'}, [text]]
+
+        res = Rack::Response.new
+        res.redirect('/home/index', 302)
+        return res
       end
 
       klass, act = get_controller_and_action(env)
