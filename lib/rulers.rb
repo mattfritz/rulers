@@ -9,7 +9,10 @@ module Rulers
       end
 
       if env['PATH_INFO'] == '/'
-        return [200, {'Content-Type' => 'text/html'}, File.open('public/index.html') ]
+        cont = Object.const_get('HomeController')
+        controller = cont.new(env)
+        text = controller.send('index')
+        return [200, {'Content-Type' => 'text/html'}, [text]]
       end
 
       klass, act = get_controller_and_action(env)
