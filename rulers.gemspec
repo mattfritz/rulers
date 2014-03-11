@@ -22,6 +22,7 @@ Gem::Specification.new do |spec|
   spec.add_development_dependency "rake", "~> 0"
   spec.add_development_dependency "rack-test", "~> 0"
   spec.add_development_dependency "test-unit", "~> 2.5"
+  spec.add_development_dependency "pry-debugger", "~> 0"
 
   spec.add_runtime_dependency "rack", "~> 1.5"
 end
