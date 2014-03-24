@@ -31,9 +31,5 @@ module Rulers
         hash[name[1..-1]] = instance_variable_get(name)
       }
     end
-
-    def assigns(assigns)
-      @_assigns = view_assigns.each { |k, v| instance_variable_set("#{k}", v) }
-    end
   end
 end
