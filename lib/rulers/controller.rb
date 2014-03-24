@@ -18,10 +18,22 @@ module Rulers
 
     def render(view_name, locals = {})
       filename = File.join("app", "views", controller_name,
-        "#{view_name}.html.erb")
+                           "#{view_name}.html.erb")
       template = File.read filename
+      context = view_assigns
       eruby = Erubis::Eruby.new(template)
-      eruby.result locals.merge(:env => env)
+      eruby.evaluate(context) #.merge(:env => @env))
+    end
+    
+    def view_assigns
+      variables = instance_variables #.select { |k, v| k != :@env }
+      variables.each_with_object({}) { |name, hash|
+        hash[name[1..-1]] = instance_variable_get(name)
+      }
+    end
+
+    def assigns(assigns)
+      @_assigns = view_assigns.each { |k, v| instance_variable_set("#{k}", v) }
     end
   end
 end
