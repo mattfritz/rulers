@@ -22,7 +22,7 @@ module Rulers
       template = File.read filename
       context = view_assigns
       eruby = Erubis::Eruby.new(template)
-      eruby.evaluate(context) #.merge(:env => @env))
+      eruby.evaluate(context)
     end
     
     def view_assigns
