@@ -26,7 +26,7 @@ module Rulers
     end
     
     def view_assigns
-      variables = instance_variables #.select { |k, v| k != :@env }
+      variables = instance_variables
       variables.each_with_object({}) { |name, hash|
         hash[name[1..-1]] = instance_variable_get(name)
       }
