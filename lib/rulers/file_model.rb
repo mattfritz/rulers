@@ -3,6 +3,8 @@ require "multi_json"
 module Rulers
   module Model
     class FileModel
+      @@cache = {}
+
       def initialize(filename)
         @filename = filename
 
@@ -23,8 +25,16 @@ module Rulers
       end
 
       def self.find(id)
+        path = "db/quotes/#{id}.json"
+        binding.pry
         begin
-          FileModel.new("db/quotes/#{id}.json")
+          if should_be_cached?(id)
+            @@cache[path][:file_model]
+          else
+            @@cache[path] = Hash.new
+            @@cache[path][:cache_time] = Time.now
+            @@cache[path][:file_model] = FileModel.new(path)
+          end
         rescue => e
           raise Rulers::Exceptions::RecordNotFound.new("Record was not found: " << e.message)
         end
@@ -76,6 +86,15 @@ module Rulers
         end
       end
 
+      def self.should_be_cached?(id)
+        path = "db/quotes/#{id}.json"
+        begin
+          return true if @@cache[path] && @@cache[path][:cache_time] >= File.mtime(path)
+          return false
+        rescue
+          false
+        end
+      end
     end
   end
 end
