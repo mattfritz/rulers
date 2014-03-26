@@ -13,6 +13,10 @@ module Rulers
       @env
     end
 
+    def request
+      @request ||= Rack::Request.new(@env)
+    end
+
     def controller_name
       klass = self.class
       klass = klass.to_s.gsub(/Controller$/, "")
