@@ -89,8 +89,7 @@ module Rulers
       def self.should_be_cached?(id)
         path = "db/quotes/#{id}.json"
         begin
-          return true if @@cache[path] && @@cache[path][:cache_time] >= File.mtime(path)
-          return false
+          @@cache[path] && @@cache[path][:cache_time] >= File.mtime(path) ? true : false
         rescue
           false
         end
