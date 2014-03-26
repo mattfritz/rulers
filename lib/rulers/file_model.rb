@@ -30,6 +30,11 @@ module Rulers
         end
       end
 
+      def self.all
+        files = Dir["db/quotes/*.json"]
+        files.map { |f| FileModel.new f }
+      end
+
     end
   end
 end
