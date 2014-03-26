@@ -59,6 +59,23 @@ module Rulers
         FileModel.new("db/quotes/#{id}.json") 
       end
 
+      def self.update(id, attrs)
+        # Tested using the following POST
+        # curl "http://localhost:3001/quotes/update_quote" -d id=6 -d attribs='{"quote": "testing"}'
+        file = File.read("db/quotes/#{id}.json")
+        hash = MultiJson.decode(file)
+        attributes = MultiJson.decode(attrs)
+        hash = hash.merge(attributes)
+        save(id, hash)
+      end
+
+      def self.save(id, hash_data)
+        json_data = MultiJson.encode(hash_data)
+        File.open("db/quotes/#{id}.json", "w") do |f|
+          f.write json_data
+        end
+      end
+
     end
   end
 end
