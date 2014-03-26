@@ -25,8 +25,8 @@ module Rulers
       def self.find(id)
         begin
           FileModel.new("db/quotes/#{id}.json")
-        rescue
-          return nil
+        rescue => e
+          raise Rulers::Exceptions::RecordNotFound.new("Record was not found: " << e.message)
         end
       end
 

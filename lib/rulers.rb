@@ -4,6 +4,7 @@ require "rulers/util"
 require "rulers/dependencies"
 require "rulers/controller"
 require "rulers/file_model"
+require "rulers/exceptions"
 
 module Rulers
   class Application
@@ -30,7 +31,7 @@ module Rulers
         text = controller.send(act)
         response = 200
       rescue Exception => e
-        text = "<h1>THERE WAS AN ERROR, DO NOT PANIC</h1>"
+        text = "<h1>Server Error</h1>"
         text << "<h2>Message</h2><p>#{e.message}</p>"
         text << "<h2>Backtrace</h2><p>#{e.backtrace.inspect}</p>"
         response = 500
