@@ -26,7 +26,6 @@ module Rulers
 
       def self.find(id)
         path = "db/quotes/#{id}.json"
-        binding.pry
         begin
           if should_be_cached?(id)
             @@cache[path][:file_model]
