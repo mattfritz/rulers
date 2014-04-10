@@ -85,6 +85,15 @@ module Rulers
         end
       end
 
+      def self.find_all_by_submitter(attrs)
+        attributes = MultiJson.decode(attrs)
+        results = []
+        all.each do |file|
+          results << file if file[:submitter] == attributes["submitter"]
+        end
+        results
+      end
+
       def self.should_be_cached?(id)
         path = "db/quotes/#{id}.json"
         begin
