@@ -102,6 +102,28 @@ module Rulers
           false
         end
       end
+
+      def self.find_all_by_attribute(attribute, attrs)
+        attributes = MultiJson.decode(attrs)
+        results = []
+        all.each do |file|
+          results << file if file[attribute.to_sym] == attributes[attribute.to_s]
+        end
+        results
+      end
+
+      def self.method_missing(method_name, *args, &block)
+        if method_name.to_s =~ /^find_all_by_(.*)/
+          find_all_by_attribute($1, *args)
+        else
+          super
+        end
+      end
+
+      def self.respond_to_missing?(method_name, include_private = false)
+        method_name.to_s.start_with?('find_all_by_') || super
+      end
+
     end
   end
 end
